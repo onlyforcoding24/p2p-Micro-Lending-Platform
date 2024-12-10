@@ -1,0 +1,59 @@
+flowchart TD
+    %% User Registration
+    Start([Start]) --> UserType{User Type?}
+    UserType -->|Borrower| BRegistration[Borrower Registration]
+    UserType -->|Lender| LRegistration[Lender Registration]
+    
+    %% Borrower Flow
+    BRegistration --> BKYCVerification[KYC Verification]
+    BKYCVerification --> BCreditCheck[Credit Assessment]
+    BCreditCheck --> BDashboard[Borrower Dashboard]
+    
+    BDashboard --> B_Choice{Choose Action}
+    B_Choice -->|Option 1| RequestLoan[Create Loan Request]
+    B_Choice -->|Option 2| ViewBids[View Lender Bids]
+    B_Choice -->|Option 3| ManageLoans[Manage Active Loans]
+    
+    RequestLoan --> LoanMatching[Matching Algorithm]
+    ViewBids --> BidParticipation[Participate in Bid]
+    ManageLoans --> Repayments[Make Repayments]
+    
+    %% Lender Flow
+    LRegistration --> LKYCVerification[KYC Verification]
+    LKYCVerification --> LDashboard[Lender Dashboard]
+    
+    LDashboard --> L_Choice{Choose Action}
+    L_Choice -->|Option 1| ReviewRequests[Review Loan Requests]
+    L_Choice -->|Option 2| CreateBid[Create Lending Bid]
+    L_Choice -->|Option 3| TrackLoans[Track Active Loans]
+    
+    %% Loan Process
+    ReviewRequests --> RiskAssessment[Risk Assessment]
+    RiskAssessment --> FundingDecision{Fund Loan?}
+    FundingDecision -->|Yes| LoanDisbursement[Loan Disbursement]
+    FundingDecision -->|No| ReviewRequests
+    
+    CreateBid --> BidMatching[Bid Matching]
+    BidMatching --> BidParticipation
+    
+    %% Loan Management
+    LoanDisbursement --> ActiveLoan[Active Loan]
+    ActiveLoan --> RepaymentTracking[Repayment Tracking]
+    RepaymentTracking --> Repayments
+    
+    Repayments --> PaymentStatus{Payment Status}
+    PaymentStatus -->|Complete| LoanClosure[Loan Closure]
+    PaymentStatus -->|Ongoing| RepaymentTracking
+    
+    %% Styling
+    classDef primary fill:#47B5FF,stroke:#0A2647,stroke-width:2px,color:white
+    classDef secondary fill:#DFF6FF,stroke:#06283D,stroke-width:2px
+    classDef decision fill:#FFB562,stroke:#06283D,stroke-width:2px
+    classDef process fill:#06283D,stroke:#47B5FF,stroke-width:2px,color:white
+    
+    class Start,UserType decision
+    class BRegistration,LRegistration,BKYCVerification,LKYCVerification primary
+    class BDashboard,LDashboard,RequestLoan,ReviewRequests,CreateBid,ViewBids secondary
+    class LoanMatching,BidMatching,RiskAssessment,LoanDisbursement process
+    class FundingDecision,PaymentStatus decision
+    class ActiveLoan,RepaymentTracking,Repayments,LoanClosure secondary

@@ -23,7 +23,7 @@ function App() {
 
 
         /**borrower  */
-        <Route path="/borrower/homePage" element={<BorrowerHomePage />} />
+        <Route path="/borrower/ " element={<BorrowerHomePage />} />
         <Route path="/borrower/loanrequest" element={<LoanRequestForm />} />
       </Routes>
     </div>
